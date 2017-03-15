@@ -96,7 +96,18 @@ public class MyMouseAdapter extends MouseAdapter {
 							}
 							else{// Between the top and bottom rows of the left column.
 								for(int i=1; i<10;i++){
-									
+									if(myPanel.colorArray[i][myPanel.mouseDownGridY].equals(Color.WHITE)){
+										//Do nothing in regards to case.
+									}
+									else{for (int h=0; i<5; i++){
+										if(colorCompare[h].equals(myPanel.colorArray[i][myPanel.mouseDownGridY])){
+											kase = i;
+											break;
+										}
+										else kase = 6;
+									}
+										
+									}
 								myPanel.colorArray[i][myPanel.mouseDownGridY] = newColor;//Add missing code.
 								}
 								myPanel.repaint();
