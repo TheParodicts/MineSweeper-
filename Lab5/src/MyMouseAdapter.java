@@ -81,8 +81,10 @@ public class MyMouseAdapter extends MouseAdapter {
 						} else {
 							//On the grid other than on the left column and on the top row:
 							Color newColor = null;
+							
 							int j=generator.nextInt(5);
 							int kase =9;
+							
 							Color []colorCompare = new Color[5] ;
 							colorCompare[0] = Color.YELLOW;
 							colorCompare[1] = Color.MAGENTA;
@@ -101,7 +103,7 @@ public class MyMouseAdapter extends MouseAdapter {
 							}
 							if (j == kase){
 								j++;
-								if(j>4){
+								if(j>4){// fix to make random.
 									j=j-2;
 								}
 							}
