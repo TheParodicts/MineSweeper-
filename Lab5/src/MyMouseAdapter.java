@@ -77,7 +77,7 @@ public class MyMouseAdapter extends MouseAdapter {
 					} else {
 						//Released the mouse button on the same cell where it was pressed
 						
-						int j=generator.nextInt(5);
+						int j;
 						int kase =9;
 						
 						Color []colorCompare = new Color[5] ;
@@ -89,32 +89,59 @@ public class MyMouseAdapter extends MouseAdapter {
 						
 						Color newColor = null;
 						
-						if (gridX == 0){//On the left column.
+						if (gridY == 0){// on the top row
+							System.out.println("top row click");
+						}
+						
+						else if (gridX == 0){//On the left column.
+							
 							if(gridY == 0 || gridY ==10){//On the top or bottom row of the left column.
 								//do nothing.
-								//System.out.println("nothing");
+								System.out.println("Top or bottom left click");
 							}
+							
 							else{// Between the top and bottom rows of the left column.
-								for(int i=1; i<10;i++){
-									if(myPanel.colorArray[i][myPanel.mouseDownGridY].equals(Color.WHITE)){
-										//Do nothing in regards to case.
-									}
-									else{for (int h=0; i<5; i++){
+								
+									
+									
+								for(int i =1; i<10; i++){	
+									
+									for (int h=0; h<5; h++){
 										if(colorCompare[h].equals(myPanel.colorArray[i][myPanel.mouseDownGridY])){
-											kase = i;
+											kase = h;
 											break;
 										}
 										else kase = 6;
 									}
-										
+									
+									do{//Changes the color to be painted if it's the same color as the current square.
+										j=generator.nextInt(5); 
+									}while (j==kase);
+								
+									switch (j) {
+									case 0:
+										newColor = Color.YELLOW;
+										break;
+									case 1:
+										newColor = Color.MAGENTA;
+										break;
+									case 2:
+										newColor = Color.BLACK;
+										break;
+									case 3:
+										newColor = new Color(0x964B00);   //Brown (from http://simple.wikipedia.org/wiki/List_of_colors)
+										break;
+									case 4:
+										newColor = new Color(0xB57EDC);   //Lavender (from http://simple.wikipedia.org/wiki/List_of_colors)
+										break;
 									}
-								myPanel.colorArray[i][myPanel.mouseDownGridY] = newColor;//Add missing code.
-								}
+								myPanel.colorArray[i][myPanel.mouseDownGridY] = newColor;
 								myPanel.repaint();
+								}
 							}
-							
-							
-						} else {
+					}
+					
+						 else {
 							//On the grid other than on the left column and on the top row:
 	
 							Color currentColor = myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY];
@@ -126,12 +153,10 @@ public class MyMouseAdapter extends MouseAdapter {
 								}
 								else kase = 6;
 							}
-							if (j == kase){
-								j++;
-								if(j>4){// fix to make random.
-									j=j-2;
-								}
-							}
+							do{
+								j=generator.nextInt(5);
+							}while (j==kase);
+						
 							switch (j) {
 							case 0:
 								newColor = Color.YELLOW;
