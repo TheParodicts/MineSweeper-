@@ -96,6 +96,7 @@ public class MyMouseAdapter extends MouseAdapter {
 							}
 							else{// Between the top and bottom rows of the left column.
 								for(int i=1; i<10;i++){
+									
 								myPanel.colorArray[i][myPanel.mouseDownGridY] = newColor;//Add missing code.
 								}
 								myPanel.repaint();
