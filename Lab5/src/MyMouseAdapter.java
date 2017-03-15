@@ -79,22 +79,56 @@ public class MyMouseAdapter extends MouseAdapter {
 						
 						int j;
 						int kase =9;
-						
 						Color []colorCompare = new Color[5] ;
 						colorCompare[0] = Color.YELLOW;
 						colorCompare[1] = Color.MAGENTA;
 						colorCompare[2] = Color.BLACK;
 						colorCompare[3] = new Color (0x964B00);
 						colorCompare[4] = new Color (0xB57EDC);
-						
 						Color newColor = null;
+						
+						
 						
 						if (gridY == 0){// on the top row
 							System.out.println("top row click");
 							if(gridX == 0 ){//On the top row of the left column.
 								//do nothing.
 								System.out.println("Top left click");
+								for(int i =1; i<10; i++){	
+									
+									for (int h=0; h<5; h++){
+										if(colorCompare[h].equals(myPanel.colorArray[i][i])){
+											kase = h;
+											break;
+										}
+										else kase = 6;
+									}
+									do{//Changes the color to be painted if it's the same color as the current square.
+										j=generator.nextInt(5); 
+									}while (j==kase);
+								
+									switch (j) {
+									case 0:
+										newColor = Color.YELLOW;
+										break;
+									case 1:
+										newColor = Color.MAGENTA;
+										break;
+									case 2:
+										newColor = Color.BLACK;
+										break;
+									case 3:
+										newColor = new Color(0x964B00);   //Brown (from http://simple.wikipedia.org/wiki/List_of_colors)
+										break;
+									case 4:
+										newColor = new Color(0xB57EDC);   //Lavender (from http://simple.wikipedia.org/wiki/List_of_colors)
+										break;
+									}
+								myPanel.colorArray[i][i] = newColor;
+								myPanel.repaint();
+								}
 							}
+								
 							else{//On the top row, not on the left-most square.
 								
 								for(int i =1; i<10; i++){	
