@@ -76,22 +76,35 @@ public class MyMouseAdapter extends MouseAdapter {
 						//Do nothing
 					} else {
 						//Released the mouse button on the same cell where it was pressed
-						if ((gridX == 0) || (gridY == 0)) {
-							//On the left column and on the top row... do nothing
+						
+						int j=generator.nextInt(5);
+						int kase =9;
+						
+						Color []colorCompare = new Color[5] ;
+						colorCompare[0] = Color.YELLOW;
+						colorCompare[1] = Color.MAGENTA;
+						colorCompare[2] = Color.BLACK;
+						colorCompare[3] = new Color (0x964B00);
+						colorCompare[4] = new Color (0xB57EDC);
+						
+						Color newColor = null;
+						
+						if (gridX == 0){//On the left column.
+							if(gridY == 0 || gridY ==10){//On the top or bottom row of the left column.
+								//do nothing.
+								//System.out.println("nothing");
+							}
+							else{// Between the top and bottom rows of the left column.
+								for(int i=1; i<10;i++){
+								myPanel.colorArray[i][myPanel.mouseDownGridY] = newColor;//Add missing code.
+								}
+								myPanel.repaint();
+							}
+							
+							
 						} else {
 							//On the grid other than on the left column and on the top row:
-							Color newColor = null;
-							
-							int j=generator.nextInt(5);
-							int kase =9;
-							
-							Color []colorCompare = new Color[5] ;
-							colorCompare[0] = Color.YELLOW;
-							colorCompare[1] = Color.MAGENTA;
-							colorCompare[2] = Color.BLACK;
-							colorCompare[3] = new Color (0x964B00);
-							colorCompare[4] = new Color (0xB57EDC);
-							
+	
 							Color currentColor = myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY];
 							
 							for (int i=0; i<5; i++){
