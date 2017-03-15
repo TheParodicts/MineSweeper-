@@ -91,6 +91,47 @@ public class MyMouseAdapter extends MouseAdapter {
 						
 						if (gridY == 0){// on the top row
 							System.out.println("top row click");
+							if(gridX == 0 ){//On the top row of the left column.
+								//do nothing.
+								System.out.println("Top left click");
+							}
+							else{//On the top row, not on the left-most square.
+								
+								for(int i =1; i<10; i++){	
+									
+									for (int h=0; h<5; h++){
+										if(colorCompare[h].equals(myPanel.colorArray[myPanel.mouseDownGridX][i])){
+											kase = h;
+											break;
+										}
+										else kase = 6;
+									}
+									
+									do{//Changes the color to be painted if it's the same color as the current square.
+										j=generator.nextInt(5); 
+									}while (j==kase);
+								
+									switch (j) {
+									case 0:
+										newColor = Color.YELLOW;
+										break;
+									case 1:
+										newColor = Color.MAGENTA;
+										break;
+									case 2:
+										newColor = Color.BLACK;
+										break;
+									case 3:
+										newColor = new Color(0x964B00);   //Brown (from http://simple.wikipedia.org/wiki/List_of_colors)
+										break;
+									case 4:
+										newColor = new Color(0xB57EDC);   //Lavender (from http://simple.wikipedia.org/wiki/List_of_colors)
+										break;
+									}
+								myPanel.colorArray[myPanel.mouseDownGridX][i] = newColor;
+								myPanel.repaint();
+								}
+							}
 						}
 						
 						else if (gridX == 0){//On the left column.
