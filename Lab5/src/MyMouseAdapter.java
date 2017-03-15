@@ -77,14 +77,15 @@ public class MyMouseAdapter extends MouseAdapter {
 					} else {
 						//Released the mouse button on the same cell where it was pressed
 						
-						int j;
-						int kase =9;
-						Color []colorCompare = new Color[5] ;
-						colorCompare[0] = Color.YELLOW;
-						colorCompare[1] = Color.MAGENTA;
-						colorCompare[2] = Color.BLACK;
-						colorCompare[3] = new Color (0x964B00);
-						colorCompare[4] = new Color (0xB57EDC);
+						int colorCaseToPaint;
+						int colorComparisionPointer =9;
+						Color currentColor;
+						Color []colorComparisonArray = new Color[5] ;
+						colorComparisonArray[0] = Color.YELLOW;
+						colorComparisonArray[1] = Color.MAGENTA;
+						colorComparisonArray[2] = Color.BLACK;
+						colorComparisonArray[3] = new Color (0x964B00);
+						colorComparisonArray[4] = new Color (0xB57EDC);
 						Color newColor = null;
 						
 						
@@ -92,22 +93,22 @@ public class MyMouseAdapter extends MouseAdapter {
 						if (gridY == 0){// on the top row
 							System.out.println("top row click");
 							if(gridX == 0 ){//On the top row of the left column.
-								//do nothing.
 								System.out.println("Top left click");
+								
 								for(int i =1; i<10; i++){	
-									
+									currentColor = myPanel.colorArray[i][i];
 									for (int h=0; h<5; h++){
-										if(colorCompare[h].equals(myPanel.colorArray[i][i])){
-											kase = h;
+										if(colorComparisonArray[h].equals(currentColor)){
+											colorComparisionPointer = h;
 											break;
 										}
-										else kase = 6;
+										else colorComparisionPointer = 6;
 									}
 									do{//Changes the color to be painted if it's the same color as the current square.
-										j=generator.nextInt(5); 
-									}while (j==kase);
+										colorCaseToPaint=generator.nextInt(5); 
+									}while (colorCaseToPaint==colorComparisionPointer);
 								
-									switch (j) {
+									switch (colorCaseToPaint) {
 									case 0:
 										newColor = Color.YELLOW;
 										break;
@@ -132,20 +133,20 @@ public class MyMouseAdapter extends MouseAdapter {
 							else{//On the top row, not on the left-most square.
 								
 								for(int i =1; i<10; i++){	
-									
+									currentColor = myPanel.colorArray[myPanel.mouseDownGridX][i];
 									for (int h=0; h<5; h++){
-										if(colorCompare[h].equals(myPanel.colorArray[myPanel.mouseDownGridX][i])){
-											kase = h;
+										if(colorComparisonArray[h].equals(currentColor)){
+											colorComparisionPointer = h;
 											break;
 										}
-										else kase = 6;
+										else colorComparisionPointer = 6;
 									}
 									
 									do{//Changes the color to be painted if it's the same color as the current square.
-										j=generator.nextInt(5); 
-									}while (j==kase);
+										colorCaseToPaint=generator.nextInt(5); 
+									}while (colorCaseToPaint==colorComparisionPointer);
 								
-									switch (j) {
+									switch (colorCaseToPaint) {
 									case 0:
 										newColor = Color.YELLOW;
 										break;
@@ -170,30 +171,63 @@ public class MyMouseAdapter extends MouseAdapter {
 						
 						else if (gridX == 0){//On the left column.
 							
-							if(gridY == 0 || gridY ==10){//On the top or bottom row of the left column.
-								//do nothing.
-								System.out.println("Top or bottom left click");
-							}
-							
-							else{// Between the top and bottom rows of the left column.
-								
+							if(gridY ==10){//On the top or bottom row of the left column.
+								System.out.println("Bottom left click");
+								for(int i =4; i<7; i++){	
+									for(int k =4; k<7; k++){
+										currentColor = myPanel.colorArray[i][k];
+										for (int h=0; h<5; h++){
 									
+											if(colorComparisonArray[h].equals(currentColor)){
+												colorComparisionPointer = h;
+												break;
+											}
+											else colorComparisionPointer = 6;
+										}
+										do{//Changes the color to be painted if it's the same color as the current square.
+											colorCaseToPaint=generator.nextInt(5); 
+										}while (colorCaseToPaint==colorComparisionPointer);
 									
-								for(int i =1; i<10; i++){	
-									
-									for (int h=0; h<5; h++){
-										if(colorCompare[h].equals(myPanel.colorArray[i][myPanel.mouseDownGridY])){
-											kase = h;
+										switch (colorCaseToPaint) {
+										case 0:
+											newColor = Color.YELLOW;
+											break;
+										case 1:
+											newColor = Color.MAGENTA;
+											break;
+										case 2:
+											newColor = Color.BLACK;
+											break;
+										case 3:
+											newColor = new Color(0x964B00);   //Brown (from http://simple.wikipedia.org/wiki/List_of_colors)
+											break;
+										case 4:
+											newColor = new Color(0xB57EDC);   //Lavender (from http://simple.wikipedia.org/wiki/List_of_colors)
 											break;
 										}
-										else kase = 6;
+									myPanel.colorArray[i][k] = newColor;
+									myPanel.repaint();
+									}
+								}
+							}
+							
+							else{// Between the top and bottom rows of the left column.	
+								System.out.println("Left row click");
+								for(int i =1; i<10; i++){	
+									currentColor = myPanel.colorArray[i][myPanel.mouseDownGridY];
+									for (int h=0; h<5; h++){
+										if(colorComparisonArray[h].equals(currentColor)){
+											colorComparisionPointer = h;
+											break;
+										}
+										else colorComparisionPointer = 6;
 									}
 									
 									do{//Changes the color to be painted if it's the same color as the current square.
-										j=generator.nextInt(5); 
-									}while (j==kase);
+										colorCaseToPaint=generator.nextInt(5); 
+									}while (colorCaseToPaint==colorComparisionPointer);
 								
-									switch (j) {
+									switch (colorCaseToPaint) {
 									case 0:
 										newColor = Color.YELLOW;
 										break;
@@ -214,25 +248,25 @@ public class MyMouseAdapter extends MouseAdapter {
 								myPanel.repaint();
 								}
 							}
-					}
+						}
 					
 						 else {
 							//On the grid other than on the left column and on the top row:
-	
-							Color currentColor = myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY];
+							 System.out.println("Individual square click");
+							currentColor = myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY];
 							
 							for (int i=0; i<5; i++){
-								if(colorCompare[i].equals(currentColor)){
-									kase = i;
+								if(colorComparisonArray[i].equals(currentColor)){
+									colorComparisionPointer = i;
 									break;
 								}
-								else kase = 6;
+								else colorComparisionPointer = 6;
 							}
 							do{
-								j=generator.nextInt(5);
-							}while (j==kase);
+								colorCaseToPaint=generator.nextInt(5);
+							}while (colorCaseToPaint==colorComparisionPointer);
 						
-							switch (j) {
+							switch (colorCaseToPaint) {
 							case 0:
 								newColor = Color.YELLOW;
 								break;
