@@ -7,7 +7,7 @@ import java.util.Random;
 
 import javax.swing.JFrame;
 
-public class MyMouseAdapter extends MouseAdapter {
+public class LabMyMouseAdapter extends MouseAdapter {
 	private Random generator = new Random();
 	public void mousePressed(MouseEvent e) {
 		switch (e.getButton()) {// Returns which mouse button was clicked.
