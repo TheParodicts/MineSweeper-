@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 public class MyMouseAdapter extends MouseAdapter {
 	private Random generator = new Random();
 	public void mousePressed(MouseEvent e) {
-		switch (e.getButton()) {
+		switch (e.getButton()) {// Returns which mouse button was clicked.
 		case 1:		//Left mouse button
 			Component c = e.getComponent();
 			while (!(c instanceof JFrame)) {
@@ -34,7 +34,26 @@ public class MyMouseAdapter extends MouseAdapter {
 			myPanel.repaint();
 			break;
 		case 3:		//Right mouse button
-			//Do nothing
+			Component c1RightClick = e.getComponent();
+			while (!(c1RightClick instanceof JFrame)) {
+				c1RightClick = c1RightClick.getParent();
+				if (c1RightClick == null) {
+					return;
+				}
+			}
+			JFrame myFrameRightClick = (JFrame) c1RightClick;
+			MyPanel myPanelRightClick = (MyPanel) myFrameRightClick.getContentPane().getComponent(0);
+			Insets myInsetsRightClick = myFrameRightClick.getInsets();
+			int x1RightClick = myInsetsRightClick.left;
+			int y1RightClick = myInsetsRightClick.top;
+			e.translatePoint(-x1RightClick, -y1RightClick);
+			int xRightClick = e.getX();
+			int yRightClick = e.getY();
+			myPanelRightClick.x = xRightClick;
+			myPanelRightClick.y = yRightClick;
+			myPanelRightClick.mouseDownGridX = myPanelRightClick.getGridX(xRightClick, yRightClick);
+			myPanelRightClick.mouseDownGridY = myPanelRightClick.getGridY(xRightClick, yRightClick);
+			myPanelRightClick.repaint();
 			break;
 		default:    //Some other button (2 = Middle mouse button, etc.)
 			//Do nothing
@@ -171,7 +190,7 @@ public class MyMouseAdapter extends MouseAdapter {
 						
 						else if (gridX == 0){//On the left column.
 							
-							if(gridY ==10){//On the top or bottom row of the left column.
+							if(gridY ==10){//bottom row of the left column.
 								System.out.println("Bottom left click");
 								for(int i =4; i<7; i++){	
 									for(int k =4; k<7; k++){
@@ -293,7 +312,75 @@ public class MyMouseAdapter extends MouseAdapter {
 			myPanel.repaint();
 			break;
 		case 3:		//Right mouse button
-			//Do nothing
+			Component cRightClick = e.getComponent();
+			while (!(cRightClick instanceof JFrame)) {
+				cRightClick = cRightClick.getParent();
+				if (cRightClick == null) {
+					return;
+				}
+			}
+			JFrame myFrameRightClick = (JFrame)cRightClick;
+			MyPanel myPanelRightClick = (MyPanel) myFrameRightClick.getContentPane().getComponent(0);  //Can also loop among components to find MyPanel
+			Insets myInsetsRightClick = myFrameRightClick.getInsets();
+			int x1RightClick = myInsetsRightClick.left;
+			int y1RightClick = myInsetsRightClick.top;
+			e.translatePoint(-x1RightClick, -y1RightClick);
+			int xRightClick = e.getX();
+			int yRightClick = e.getY();
+			myPanelRightClick.x = xRightClick;
+			myPanelRightClick.y = yRightClick;
+			int gridXRightClick = myPanelRightClick.getGridX(xRightClick, yRightClick);
+			int gridYRightClick = myPanelRightClick.getGridY(xRightClick, yRightClick);
+			if ((myPanelRightClick.mouseDownGridX == -1) || (myPanelRightClick.mouseDownGridY == -1)) {//Pressed outside of grid.
+				if (!(gridXRightClick == -1) || !(gridYRightClick == -1)) {
+					//Is releasing inside grid
+					//Do nothing
+					System.out.println("Right Clicked outside, but released inside");
+				} 
+				else{
+					System.out.print("Right Clicked outside.");
+					int colorCaseToPaint;
+					int colorComparisionPointer =9;
+					Color currentColor;
+					Color []colorComparisonArray = new Color[3] ;
+					colorComparisonArray[0] = Color.RED;
+					colorComparisonArray[1] = Color.GREEN;
+					colorComparisonArray[2] = Color.BLUE;
+					Color newColor = null;
+					
+					for(int i =1; i<10; i++){	
+						for(int k =1; k<10; k++){
+							currentColor = myPanelRightClick.colorArray[i][k];
+							for (int h=0; h<3; h++){
+						
+								if(colorComparisonArray[h].equals(currentColor)){
+									colorComparisionPointer = h;
+									break;
+								}
+								else colorComparisionPointer = 6;
+							}
+							do{//Changes the color to be painted if it's the same color as the current square.
+								colorCaseToPaint=generator.nextInt(3); 
+							}while (colorCaseToPaint==colorComparisionPointer);
+						
+							switch (colorCaseToPaint) {
+							case 0:
+								newColor = Color.RED;
+								break;
+							case 1:
+								newColor = Color.GREEN;
+								break;
+							case 2:
+								newColor = Color.BLUE;
+								break;
+							}
+						myPanelRightClick.colorArray[i][k] = newColor;
+						myPanelRightClick.repaint();
+						}
+					}
+				}
+			}
+			else System.out.print("Right Clicked inside grid.");
 			break;
 		default:    //Some other button (2 = Middle mouse button, etc.)
 			//Do nothing
