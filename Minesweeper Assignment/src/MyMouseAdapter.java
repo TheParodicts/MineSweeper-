@@ -76,11 +76,11 @@ public class MyMouseAdapter extends MouseAdapter {
 						//Do nothing
 					} else {
 						//Released the mouse button on the same cell where it was pressed
-						if ((gridX == 0) || (gridY == 0)) {
-							//On the left column and on the top row... do nothing
-						} else {
+//						if ((gridX == 0) || (gridY == 0)) {
+//							//On the left column and on the top row... do nothing
+//						} else {
 							//On the grid other than on the left column and on the top row:
-							Color newColor = null;
+							Color newColor = Color.LIGHT_GRAY;
 							switch (generator.nextInt(5)) {
 							case 0:
 								newColor = Color.YELLOW;
@@ -100,7 +100,7 @@ public class MyMouseAdapter extends MouseAdapter {
 							}
 							myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
 							myPanel.repaint();
-						}
+//						}
 					}
 				}
 			}
