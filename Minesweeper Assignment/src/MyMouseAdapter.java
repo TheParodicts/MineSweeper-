@@ -126,10 +126,10 @@ public class MyMouseAdapter extends MouseAdapter {
 			myPanelRightClick.y = yRightClick;
 			int gridXRightClick = myPanelRightClick.getGridX(xRightClick, yRightClick);
 			int gridYRightClick = myPanelRightClick.getGridY(xRightClick, yRightClick);
-			if ((myPanelRightClick.mouseDownGridX == -1) || (myPanelRightClick.mouseDownGridY == -1)) {//Pressed outside of grid.
-					//Is releasing inside grid
+			if ((gridXRightClick == -1) || (gridYRightClick == -1)) {//Pressed outside of grid.
+					
 					//Do nothing
-					System.out.print("Right Clicked outside.");
+					System.out.println("Right Clicked outside.");
 			}
 			else if(!(myPanelRightClick.mouseDownGridX == -1) && !(myPanelRightClick.mouseDownGridY == -1)){
 				System.out.println("Right Clicked inside grid.");
@@ -137,6 +137,11 @@ public class MyMouseAdapter extends MouseAdapter {
 					myPanelRightClick.colorArray[gridXRightClick][gridYRightClick] = Color.RED;
 					myPanelRightClick.repaint();
 					System.out.println("Turned Red");//yeah
+				}
+				else if(myPanelRightClick.colorArray[gridXRightClick][gridYRightClick].equals(Color.RED)){
+					myPanelRightClick.colorArray[gridXRightClick][gridYRightClick] = Color.WHITE;
+					myPanelRightClick.repaint();
+					System.out.println("Unflagged.");
 				}
 			}
 			break; 
