@@ -136,7 +136,7 @@ public class MyMouseAdapter extends MouseAdapter {
 				if(myPanelRightClick.colorArray[gridXRightClick][gridYRightClick].equals(Color.WHITE)){
 					myPanelRightClick.colorArray[gridXRightClick][gridYRightClick] = Color.RED;
 					myPanelRightClick.repaint();
-					System.out.println("Turned Red");
+					System.out.println("Turned Red");//yeah
 				}
 			}
 			break; 
