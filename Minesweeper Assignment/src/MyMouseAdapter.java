@@ -107,7 +107,38 @@ public class MyMouseAdapter extends MouseAdapter {
 			myPanel.repaint();
 			break;
 		case 3:		//Right mouse button
-			//Do nothing
+			Component cRightClick = e.getComponent();
+			while (!(cRightClick instanceof JFrame)) {
+				cRightClick = cRightClick.getParent();
+				if (cRightClick == null) {
+					return;
+				}
+			}
+			JFrame myFrameRightClick = (JFrame)cRightClick;
+			MyPanel myPanelRightClick = (MyPanel) myFrameRightClick.getContentPane().getComponent(0);  //Can also loop among components to find MyPanel
+			Insets myInsetsRightClick = myFrameRightClick.getInsets();
+			int x1RightClick = myInsetsRightClick.left;
+			int y1RightClick = myInsetsRightClick.top;
+			e.translatePoint(-x1RightClick, -y1RightClick);
+			int xRightClick = e.getX();
+			int yRightClick = e.getY();
+			myPanelRightClick.x = xRightClick;
+			myPanelRightClick.y = yRightClick;
+			int gridXRightClick = myPanelRightClick.getGridX(xRightClick, yRightClick);
+			int gridYRightClick = myPanelRightClick.getGridY(xRightClick, yRightClick);
+			if ((myPanelRightClick.mouseDownGridX == -1) || (myPanelRightClick.mouseDownGridY == -1)) {//Pressed outside of grid.
+					//Is releasing inside grid
+					//Do nothing
+					System.out.print("Right Clicked outside.");
+			}
+			else if(!(myPanelRightClick.mouseDownGridX == -1) && !(myPanelRightClick.mouseDownGridY == -1)){
+				System.out.println("Right Clicked inside grid.");
+				if(myPanelRightClick.colorArray[gridXRightClick][gridYRightClick].equals(Color.WHITE)){
+					myPanelRightClick.colorArray[gridXRightClick][gridYRightClick] = Color.RED;
+					myPanelRightClick.repaint();
+					System.out.println("Turned Red");
+				}
+			}
 			break;
 		default:    //Some other button (2 = Middle mouse button, etc.)
 			//Do nothing

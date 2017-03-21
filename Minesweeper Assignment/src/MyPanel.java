@@ -35,7 +35,7 @@ public class MyPanel extends JPanel {
 //		}
 		for (int x = 0; x < TOTAL_COLUMNS; x++) {   //The rest of the grid
 			for (int y = 0; y < TOTAL_ROWS; y++) {
-				colorArray[x][y] = Color.LIGHT_GRAY;
+				colorArray[x][y] = Color.WHITE;
 			}
 		}
 	}
@@ -63,7 +63,7 @@ public class MyPanel extends JPanel {
 			g.drawLine(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)), y1 + GRID_Y, x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)), y1 + GRID_Y + ((INNER_CELL_SIZE + 1) * (TOTAL_ROWS - 1)));
 		}
 		//Paint the background
-		g.setColor(Color.WHITE);
+		g.setColor(Color.GRAY);
 		g.fillRect(x1, y1, width - 1, height -1);
 
 		//Draw an additional cell at the bottom left
