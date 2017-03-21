@@ -139,7 +139,7 @@ public class MyMouseAdapter extends MouseAdapter {
 					System.out.println("Turned Red");
 				}
 			}
-			break;
+			break; 
 		default:    //Some other button (2 = Middle mouse button, etc.)
 			//Do nothing
 			break;
