@@ -8,7 +8,14 @@ import java.util.Random;
 import javax.swing.JFrame;
 
 public class MyMouseAdapter extends MouseAdapter {
-	private Random generator = new Random();
+public int numMines=20;
+	
+	public Mines minesX = new Mines(numMines);
+	public Mines minesY = new Mines(numMines);
+	
+	
+	
+	
 	public void mousePressed(MouseEvent e) {
 		switch (e.getButton()) {
 		case 1:		//Left mouse button
@@ -75,32 +82,38 @@ public class MyMouseAdapter extends MouseAdapter {
 						//Released the mouse button on a different cell where it was pressed
 						//Do nothing
 					} else {
-						//Released the mouse button on the same cell where it was pressed
-//						if ((gridX == 0) || (gridY == 0)) {
-//							//On the left column and on the top row... do nothing
-//						} else {
 							//On the grid other than on the left column and on the top row:
-							Color newColor = Color.LIGHT_GRAY;
-							switch (generator.nextInt(5)) {
-							case 0:
-								newColor = Color.YELLOW;
-								break;
-							case 1:
-								newColor = Color.MAGENTA;
-								break;
-							case 2:
-								newColor = Color.BLACK;
-								break;
-							case 3:
-								newColor = new Color(0x964B00);   //Brown (from http://simple.wikipedia.org/wiki/List_of_colors)
-								break;
-							case 4:
-								newColor = new Color(0xB57EDC);   //Lavender (from http://simple.wikipedia.org/wiki/List_of_colors)
-								break;
+						if(myPanel.colorArray[gridX][gridY].equals(Color.RED))	{
+							//If it is flagged (Red), do nothing.
+						}
+						else if (myPanel.colorArray[gridX][gridY].equals(Color.WHITE)){//Clicked on a non-flagged box.
+							int xCoord;
+							int yCoord;
+							int i=0;
+							boolean mineHere=false;
+							do {
+								 xCoord = minesX.getCoord(i);
+								 yCoord = minesY.getCoord(i);
+								 if(gridX==xCoord && gridY == yCoord){
+									
+										mineHere = true;// If there is a mine here. Write missing code.
+								 }
+								 i++;
+								 System.out.println("checked for mine");
+							}while (i<numMines);
+							
+							if (mineHere == true){
+								myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = Color.BLACK;
+								myPanel.repaint();
 							}
+							
+							else{
+							Color newColor = Color.LIGHT_GRAY;
+							
 							myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
 							myPanel.repaint();
-//						}
+							}
+						}
 					}
 				}
 			}
