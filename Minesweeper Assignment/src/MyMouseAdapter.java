@@ -102,7 +102,8 @@ public int numMines=20;
 								 System.out.println("checked for mine");
 							}while (i<numMines);
 							
-							if (mineHere == true){
+							if (mineHere){
+								System.out.println("Stepped on a mine!");
 								myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = Color.BLACK;
 								myPanel.repaint();
 							}
