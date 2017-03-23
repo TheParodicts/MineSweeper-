@@ -1,9 +1,10 @@
-import java.awt.Color;
+ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Random;
+import javax.swing.JOptionPane;
 
 import javax.swing.JFrame;
 
@@ -97,6 +98,7 @@ public int numMines=20;
 								 if(gridX==xCoord && gridY == yCoord){
 									
 										mineHere = true;// If there is a mine here. Write missing code.
+										PUMessage.infoBox(myPanel, "You stepped on a mine", "Game Over");//Calls the Game OVer pop up msg.
 								 }
 								 i++;
 								 System.out.println("checked for mine");
