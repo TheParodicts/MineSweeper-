@@ -98,7 +98,7 @@ public int numMines=20;
 								 if(gridX==xCoord && gridY == yCoord){
 									
 										mineHere = true;// If there is a mine here. Write missing code.
-										PUMessage.infoBox(myPanel, "You stepped on a mine", "Game Over");//Calls the Game OVer pop up msg.
+										
 								 }
 								 i++;
 								 System.out.println("checked for mine");
@@ -108,6 +108,8 @@ public int numMines=20;
 								System.out.println("Stepped on a mine!");
 								myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = Color.BLACK;
 								myPanel.repaint();
+								PUMessage.infoBox(myPanel, "You stepped on a mine", "Game Over");//Calls the Game OVer pop up msg.
+
 							}
 							
 							else{
