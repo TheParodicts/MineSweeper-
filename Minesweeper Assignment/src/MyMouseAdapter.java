@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JFrame;
 
 public class MyMouseAdapter extends MouseAdapter {
-public int numMines=20;
+public int numMines=12;
 	
 public boolean[][] mines= MyPanel.setMines(numMines);
 	
