@@ -14,5 +14,6 @@ public class Mines {
 	public int getCoord(int i){
 		return this.mineArray[i];
 	}
+	
 
 }

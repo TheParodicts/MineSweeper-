@@ -123,4 +123,27 @@ public class MyPanel extends JPanel {
 		}
 		return y;
 	}
+
+	public static boolean[][] setMines(int numMines){
+		boolean [][] mineArray = new boolean[9][9];
+		 Random generator = new Random();
+		 int x; int y;
+		 for (int i=0; i<9; i++){
+			 for(int j=0; j<9; j++){
+				 mineArray[i][j]=false;
+			 }
+		 }
+		 
+		for(int i = 0; i<numMines; i++){
+			do{
+				x = generator.nextInt(9);
+				y = generator.nextInt(9);
+				if(mineArray[x][y]== false){
+					mineArray[x][y]=true;
+					break;
+				}
+			}while(mineArray[x][y]==true);
+		}
+		return mineArray;
+	}
 }
