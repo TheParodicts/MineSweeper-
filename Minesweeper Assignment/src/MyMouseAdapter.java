@@ -11,12 +11,7 @@ import javax.swing.JFrame;
 public class MyMouseAdapter extends MouseAdapter {
 public int numMines=20;
 	
-	//public Mines minesX = new Mines(numMines);
-	//public Mines minesY = new Mines(numMines);
-	public boolean[][] mines= MyPanel.setMines(numMines);
-	
-	
-	
+public boolean[][] mines= MyPanel.setMines(numMines);
 	
 	public void mousePressed(MouseEvent e) {
 		switch (e.getButton()) {
@@ -89,7 +84,7 @@ public int numMines=20;
 							//If it is flagged (Red), do nothing.
 						}
 						else if (myPanel.colorArray[gridX][gridY].equals(Color.WHITE)){//Clicked on a non-flagged box.
-							if (mines[gridX][gridY]==true){
+							if (mines[gridX][gridY]==true){//If you stepped on a mine.Paints all squares black or gray or leaves them red.
 								for(int i=0; i<9; i++){
 									for (int j=0; j<9; j++){
 										if (mines[i][j]==true){
@@ -98,13 +93,7 @@ public int numMines=20;
 										else{
 											if(myPanel.colorArray[i][j].equals(Color.WHITE)){
 												myPanel.colorArray[i][j]= Color.LIGHT_GRAY;
-											
-										
-									}
-								
-
-								
-
+											}
 										}
 									}
 								}
@@ -112,29 +101,10 @@ public int numMines=20;
 								PUMessage.infoBox(myPanel, "You stepped on a mine", "Game Over");//Calls the Game OVer pop up msg.
 							}
 							else{
-								int mineContact=0;
-								for(int i= gridX-1; i<gridX+2; i++){
-									if(i<0){
-										i=0;}
-									else if(i>8)
-										break;
-									for( int j= gridY-1; j<gridY+2; j++){
-										if(j<0){
-											j=0;}
-										else if(j>8)
-											break;
-										if(myPanel.colorArray[i][j].equals(Color.WHITE)){
-												if (mines[i][j]==true){
-													mineContact++;
-												
-											}
-										}
-									}
-								}
-							Color newColor = Color.LIGHT_GRAY;
-							myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
+							MyPanel.mineChecker(gridX, gridY, mines, myPanel.colorArray);
+							myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = Color.LIGHT_GRAY;
 							myPanel.repaint();
-							System.out.println(mineContact);
+							
 							}
 						}
 					}
@@ -186,4 +156,6 @@ public int numMines=20;
 			break;
 		}
 	}
+	
+
 }

@@ -146,4 +146,43 @@ public class MyPanel extends JPanel {
 		}
 		return mineArray;
 	}
+	public static void mineChecker(int x, int y, boolean mines[][], Color[][] myPanel){
+		int mineContact=0;
+		for(int i= x-1; i<x+2; i++){
+			if(i<0){
+				i=0;}
+			else if(i>8)
+				break;
+			for( int j= y-1; j<y+2; j++){
+				if(j<0){
+					j=0;}
+				else if(j>8)
+					break;
+				if(myPanel[x][y].equals(Color.WHITE)||myPanel[x][y].equals(Color.RED)){
+						if (mines[i][j]==true){
+							mineContact++;
+						
+					}}
+				}
+			}
+		/*if (mineContact ==0){
+			myPanel[x][y]=Color.LIGHT_GRAY;
+			myPanel.repaint();
+			for(int i=-1; i<2; i++){
+				if(x+i<0){
+					i=0;}
+				else if(x+i>8)
+					break;
+				for(int j =-1; j<2; j++){
+					if(y+j<0){
+						j=0;}
+					else if(y+j>8)
+						break;
+			MyPanel.mineChecker(x+i, y+j, mines, myPanel);
+			System.out.println("Subcount is 0");
+			}
+				}
+		}*/
+		System.out.println("Main count is" +mineContact);
+		}
 }
