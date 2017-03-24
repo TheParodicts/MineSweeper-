@@ -89,6 +89,7 @@ public boolean[][] mines= MyPanel.setMines(numMines);
 									for (int j=0; j<9; j++){
 										if (mines[i][j]==true){
 											myPanel.colorArray[i][j]= Color.BLACK;
+
 										}
 										else{
 											if(myPanel.colorArray[i][j].equals(Color.WHITE)){
@@ -101,9 +102,8 @@ public boolean[][] mines= MyPanel.setMines(numMines);
 								PUMessage.infoBox(myPanel, "You stepped on a mine", "Game Over");//Calls the Game OVer pop up msg.
 							}
 							else{
-							MyPanel.mineChecker(gridX, gridY, mines, myPanel);
-							
-							
+							myPanel.mineChecker(gridX, gridY, mines, myPanel);
+							myPanel.repaint();
 							}
 						}
 					}
