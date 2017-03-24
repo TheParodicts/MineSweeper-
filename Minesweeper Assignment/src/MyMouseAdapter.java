@@ -101,9 +101,8 @@ public boolean[][] mines= MyPanel.setMines(numMines);
 								PUMessage.infoBox(myPanel, "You stepped on a mine", "Game Over");//Calls the Game OVer pop up msg.
 							}
 							else{
-							MyPanel.mineChecker(gridX, gridY, mines, myPanel.colorArray);
-							myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = Color.LIGHT_GRAY;
-							myPanel.repaint();
+							MyPanel.mineChecker(gridX, gridY, mines, myPanel);
+							
 							
 							}
 						}
