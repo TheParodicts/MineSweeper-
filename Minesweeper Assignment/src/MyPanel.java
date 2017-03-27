@@ -17,7 +17,11 @@ public class MyPanel extends JPanel {
 	public int mouseDownGridX = 0;
 	public int mouseDownGridY = 0;
 	public Color[][] colorArray = new Color[TOTAL_COLUMNS][TOTAL_ROWS];
-	public MyPanel() {   //This is the constructor... this code runs first to initialize
+	private static int mineless = TOTAL_COLUMNS * (TOTAL_ROWS -1) - MyMouseAdapter.getMines();
+	
+	
+	
+ 	public MyPanel() {   //This is the constructor... this code runs first to initialize
 		if (INNER_CELL_SIZE + (new Random()).nextInt(1) < 1) {	//Use of "random" to prevent unwanted Eclipse warning
 			throw new RuntimeException("INNER_CELL_SIZE must be positive!");
 		}
@@ -146,9 +150,9 @@ public class MyPanel extends JPanel {
 		}
 		return mineArray;
 	}
-	public static void mineChecker(int x, int y, boolean mines[][], MyPanel myPanel){
+	public static  void mineChecker(int x, int y, boolean mines[][], MyPanel myPanel){
 		int mineContact=0;
-		if(mines[x][y]|| myPanel.colorArray[x][y].equals(Color.LIGHT_GRAY)) return;
+		if(mines[x][y]|| myPanel.colorArray[x][y].equals(Color.LIGHT_GRAY)) return;//prevents checking what's already checked.
 		for(int i= x-1; i<x+2; i++){
 			if(i<0){
 				i=0;}
@@ -168,6 +172,7 @@ public class MyPanel extends JPanel {
 			}
 		if (mineContact ==0){
 			myPanel.colorArray[x][y]=Color.LIGHT_GRAY;
+			mineless--;
 			for(int i=-1; i<2; i++){
 				if(x+i<0){
 					i=0;}
@@ -187,5 +192,14 @@ public class MyPanel extends JPanel {
 		System.out.println("Main count is" +mineContact);
 		myPanel.colorArray[x][y]=Color.LIGHT_GRAY;
 		myPanel.repaint();
+		mineless--;
 		}}
+
+	public static void winChecker(MyPanel myPanel){
+		if (mineless<=0){
+			PUMessage.infoBox(myPanel, "You won!", "Congratulations!");//Calls the Wining pop up msg.
+		}
+	}
+
+	
 }

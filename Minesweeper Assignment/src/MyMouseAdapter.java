@@ -9,8 +9,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JFrame;
 
 public class MyMouseAdapter extends MouseAdapter {
-public int numMines=12;
+public static int numMines=2;
 	
+public static int getMines(){
+	return numMines;
+}
 public boolean[][] mines= MyPanel.setMines(numMines);
 	
 	public void mousePressed(MouseEvent e) {
@@ -101,9 +104,8 @@ public boolean[][] mines= MyPanel.setMines(numMines);
 								PUMessage.infoBox(myPanel, "You stepped on a mine", "Game Over");//Calls the Game OVer pop up msg.
 							}
 							else{
-							MyPanel.mineChecker(gridX, gridY, mines, myPanel);
-							
-							
+							MyPanel.mineChecker(gridX, gridY, mines, myPanel);//checks/paints blocks.
+							MyPanel.winChecker(myPanel);
 							}
 						}
 					}
