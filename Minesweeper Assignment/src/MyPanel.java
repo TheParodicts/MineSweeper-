@@ -18,7 +18,7 @@ public class MyPanel extends JPanel {
 	public int mouseDownGridX = 0;
 	public int mouseDownGridY = 0;
 	public Color[][] colorArray = new Color[TOTAL_COLUMNS][TOTAL_ROWS];
-	public Graphics[][] numberArray = new Graphics[TOTAL_COLUMNS][TOTAL_ROWS];
+	public int[][] nearMines = new int[TOTAL_COLUMNS][TOTAL_ROWS];
 
 	public int mineless = 9 * 9 - (MyMouseAdapter.getMines());
 	
@@ -41,10 +41,7 @@ public class MyPanel extends JPanel {
 
 			}
 		}
-	}
-	
-
-	
+ 	}
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
@@ -80,13 +77,9 @@ public class MyPanel extends JPanel {
 				Color c = colorArray[x][y];
 				g.setColor(c);
 				g.fillRect(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 1, y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 1, INNER_CELL_SIZE, INNER_CELL_SIZE);
-				
+				g.drawString(Integer.toString(nearMines[x][y]), (x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 1),  y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 1);
 			}
-		}
-		
-		
-
-		
+		}	
 	}
 	public int getGridX(int x, int y) {
 		Insets myInsets = getInsets();
@@ -113,6 +106,7 @@ public class MyPanel extends JPanel {
 		}
 		return x;
 	}
+	
 	public int getGridY(int x, int y) {
 		Insets myInsets = getInsets();
 		int x1 = myInsets.left;
@@ -161,14 +155,19 @@ public class MyPanel extends JPanel {
 		}
 		return mineArray;
 	}
+	
+	
 
 
-	public int mineChecker(int x, int y, boolean mines[][], MyPanel myPanel, Graphics g){
+	public int mineChecker(int x, int y, boolean mines[][], MyPanel myPanel){
 
 		int mineContact=0;
 		
 
-		if(mines[x][y]|| !myPanel.colorArray[x][y].equals(Color.WHITE)|| myPanel.colorArray[x][y].equals(Color.RED)) return mineContact;//prevents checking what's already checked.
+		if(mines[x][y]|| !myPanel.colorArray[x][y].equals(Color.WHITE)|| myPanel.colorArray[x][y].equals(Color.RED)){
+			nearMines[x][y] = mineContact;
+			return mineContact;//prevents checking what's already checked.
+		}
 		for(int i= x-1; i<x+2; i++){
 			if(i<0){
 				i=0;}
@@ -206,9 +205,10 @@ public class MyPanel extends JPanel {
 						break;
 						}
 					
-					mineChecker(x+i, y+j, mines, myPanel, null);
+					mineChecker(x+i, y+j, mines, myPanel);
 				}
 			}
+			nearMines[x][y] = mineContact;
 			return mineContact;
 		}
 		else{
@@ -216,52 +216,44 @@ public class MyPanel extends JPanel {
 			
 			case 1:
 				myPanel.colorArray[x][y]=Color.YELLOW;
-				g.drawString("1", x, y);
-				
 				
 				break;
 			case 2:
 				myPanel.colorArray[x][y]=Color.BLUE;
-				g.drawString("2", x, y);
 				
 				break;
 			case 3:
 				myPanel.colorArray[x][y]=Color.CYAN;
-				g.drawString("3", x, y);
 				
 				break;
 			case 4:
 				myPanel.colorArray[x][y]=Color.GREEN;
-				g.drawString("4", x, y);
 				
 				break;
 			case 5:
 				myPanel.colorArray[x][y]=Color.ORANGE;
-				g.drawString("5", x, y);
 				
 				break;
 			case 6:
 				myPanel.colorArray[x][y]=Color.MAGENTA;
-				g.drawString("6", x, y);
 				
 				break;
 			case 7:
 				myPanel.colorArray[x][y]=Color.PINK;
-				g.drawString("7", x, y);
 				
 				break;
 			case 8:
 				myPanel.colorArray[x][y]=new Color(10,100,220);
-				g.drawString("8", x, y);
 				
 				break;
 			
 			}
 			
-			System.out.println("Main count is " +mineContact);
+			System.out.println("Main count is " + mineContact);
 			myPanel.repaint();
 			myPanel.mineless --;
 			//System.out.println(myPanel.mineless);
+			nearMines[x][y] = mineContact;
 			return mineContact;
 			}
 		}

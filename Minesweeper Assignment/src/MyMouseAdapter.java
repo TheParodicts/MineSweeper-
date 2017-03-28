@@ -12,7 +12,6 @@ import javax.swing.JFrame;
 
 
 public class MyMouseAdapter extends MouseAdapter {
-private static final Graphics g = null;
 public static int numMines=5;
 	
 public static int getMines(){
@@ -110,7 +109,7 @@ public boolean[][] mines= MyPanel.setMines(numMines);
 							}
 							else{
 							
-							myPanel.mineChecker(gridX, gridY, mines, myPanel, g );//checks/paints blocks.
+							myPanel.mineChecker(gridX, gridY, mines, myPanel );//checks/paints blocks.
 							myPanel.repaint();
 							MyPanel.winChecker(myPanel);
 							}
