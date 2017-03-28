@@ -1,5 +1,6 @@
  import java.awt.Color;
 import java.awt.Component;
+import java.awt.Graphics;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -8,7 +9,10 @@ import javax.swing.JOptionPane;
 
 import javax.swing.JFrame;
 
+
+
 public class MyMouseAdapter extends MouseAdapter {
+private static final Graphics g = null;
 public static int numMines=5;
 	
 public static int getMines(){
@@ -105,7 +109,8 @@ public boolean[][] mines= MyPanel.setMines(numMines);
 								PUMessage.infoBox(myPanel, "You stepped on a mine", "Game Over");//Calls the Game OVer pop up msg.
 							}
 							else{
-							MyPanel.mineChecker(gridX, gridY, mines, myPanel);//checks/paints blocks.
+							
+							myPanel.mineChecker(gridX, gridY, mines, myPanel, g );//checks/paints blocks.
 							myPanel.repaint();
 							MyPanel.winChecker(myPanel);
 							}
