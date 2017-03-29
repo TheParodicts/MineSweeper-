@@ -77,7 +77,10 @@ public class MyPanel extends JPanel {
 				Color c = colorArray[x][y];
 				g.setColor(c);
 				g.fillRect(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 1, y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 1, INNER_CELL_SIZE, INNER_CELL_SIZE);
-				g.drawString(Integer.toString(nearMines[x][y]), (x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 1),  y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 1);
+				if(nearMines[x][y]!=0){
+					g.setColor(Color.BLACK);
+				}
+				g.drawString(Integer.toString(nearMines[x][y]), (x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 12),  y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 20);
 			}
 		}	
 	}
@@ -165,7 +168,7 @@ public class MyPanel extends JPanel {
 		
 
 		if(mines[x][y]|| !myPanel.colorArray[x][y].equals(Color.WHITE)|| myPanel.colorArray[x][y].equals(Color.RED)){
-			nearMines[x][y] = mineContact;
+			//nearMines[x][y] = mineContact;
 			return mineContact;//prevents checking what's already checked.
 		}
 		for(int i= x-1; i<x+2; i++){
@@ -212,43 +215,8 @@ public class MyPanel extends JPanel {
 			return mineContact;
 		}
 		else{
-			switch (mineContact) {
 			
-			case 1:
-				myPanel.colorArray[x][y]=Color.YELLOW;
-				
-				break;
-			case 2:
-				myPanel.colorArray[x][y]=Color.BLUE;
-				
-				break;
-			case 3:
-				myPanel.colorArray[x][y]=Color.CYAN;
-				
-				break;
-			case 4:
-				myPanel.colorArray[x][y]=Color.GREEN;
-				
-				break;
-			case 5:
-				myPanel.colorArray[x][y]=Color.ORANGE;
-				
-				break;
-			case 6:
-				myPanel.colorArray[x][y]=Color.MAGENTA;
-				
-				break;
-			case 7:
-				myPanel.colorArray[x][y]=Color.PINK;
-				
-				break;
-			case 8:
-				myPanel.colorArray[x][y]=new Color(10,100,220);
-				
-				break;
-			
-			}
-			
+			myPanel.colorArray[x][y]=Color.LIGHT_GRAY;
 			System.out.println("Main count is " + mineContact);
 			myPanel.repaint();
 			myPanel.mineless --;
