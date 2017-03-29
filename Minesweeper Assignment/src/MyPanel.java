@@ -78,7 +78,26 @@ public class MyPanel extends JPanel {
 				g.setColor(c);
 				g.fillRect(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 1, y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 1, INNER_CELL_SIZE, INNER_CELL_SIZE);
 				if(nearMines[x][y]!=0){
-					g.setColor(Color.BLACK);
+					switch(nearMines[x][y]){
+					case 0: break;
+					case 1: g.setColor(Color.BLACK);
+					break;
+					case 2: g.setColor(Color.BLUE);
+					break;
+					case 3: g.setColor(Color.YELLOW);
+					break;
+					case 4: g.setColor(Color.RED);
+					break;
+					case 5: g.setColor(Color.GREEN);
+					break;
+					case 6: g.setColor(Color.PINK);
+					break;
+					case 7: g.setColor(Color.CYAN);
+					break;
+					case 8: g.setColor(Color.MAGENTA);
+					break;
+					}
+					
 				}
 				g.drawString(Integer.toString(nearMines[x][y]), (x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 12),  y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 20);
 			}
