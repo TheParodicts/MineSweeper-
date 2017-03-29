@@ -1,6 +1,5 @@
  import java.awt.Color;
 import java.awt.Component;
-import java.awt.Graphics;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -12,7 +11,7 @@ import javax.swing.JFrame;
 
 
 public class MyMouseAdapter extends MouseAdapter {
-public static int numMines=5;
+public static int numMines=10;
 	
 public static int getMines(){
 	return numMines;

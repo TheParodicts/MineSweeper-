@@ -21,9 +21,9 @@ public class MyPanel extends JPanel {
 	public int[][] nearMines = new int[TOTAL_COLUMNS][TOTAL_ROWS];
 
 	public int mineless = 9 * 9 - (MyMouseAdapter.getMines());
-	
-	
- 	public MyPanel() {   //This is the constructor... this code runs first to initialize
+
+
+	public MyPanel() {   //This is the constructor... this code runs first to initialize
 
 		if (INNER_CELL_SIZE + (new Random()).nextInt(1) < 1) {	//Use of "random" to prevent unwanted Eclipse warning
 			throw new RuntimeException("INNER_CELL_SIZE must be positive!");
@@ -41,7 +41,7 @@ public class MyPanel extends JPanel {
 
 			}
 		}
- 	}
+	}
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
@@ -77,7 +77,48 @@ public class MyPanel extends JPanel {
 				Color c = colorArray[x][y];
 				g.setColor(c);
 				g.fillRect(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 1, y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 1, INNER_CELL_SIZE, INNER_CELL_SIZE);
-				g.drawString(Integer.toString(nearMines[x][y]), (x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 1),  y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 1);
+				Color sc = c;
+				String string = "";
+
+				if(nearMines[x][y] == 0){
+					sc=c;
+					string ="";
+				}
+				
+				else if(nearMines[x][y] > 0){
+					switch(nearMines[x][y]){
+					case 1:
+						string = "1";
+						break;
+					case 2:
+						string = "2";
+						break;
+					case 3:
+						string = "3";
+						break;
+					case 4:
+						string = "4";
+						break;
+					case 5:
+						string = "5";
+						break;
+					case 6:
+						string = "6";
+						break;
+					case 7:
+						string = "7";
+						break;
+					case 8:
+						string = "8";
+						break;
+					
+					}
+					sc=Color.BLACK;
+
+				}	
+				g.setColor(sc);
+				g.drawString(string, (x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 10),  y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 20);
+
 			}
 		}	
 	}
@@ -106,7 +147,7 @@ public class MyPanel extends JPanel {
 		}
 		return x;
 	}
-	
+
 	public int getGridY(int x, int y) {
 		Insets myInsets = getInsets();
 		int x1 = myInsets.left;
@@ -155,19 +196,18 @@ public class MyPanel extends JPanel {
 		}
 		return mineArray;
 	}
-	
-	
 
 
 	public int mineChecker(int x, int y, boolean mines[][], MyPanel myPanel){
 
 		int mineContact=0;
-		
+
 
 		if(mines[x][y]|| !myPanel.colorArray[x][y].equals(Color.WHITE)|| myPanel.colorArray[x][y].equals(Color.RED)){
 			nearMines[x][y] = mineContact;
 			return mineContact;//prevents checking what's already checked.
 		}
+		myPanel.colorArray[x][y]=Color.LIGHT_GRAY;
 		for(int i= x-1; i<x+2; i++){
 			if(i<0){
 				i=0;}
@@ -182,81 +222,43 @@ public class MyPanel extends JPanel {
 					if (mines[i][j]==true){
 						mineContact++;
 					}
+					
 				}
 			}
 		}
-	
 		
+
 		if (mineContact ==0){
-			myPanel.colorArray[x][y]=Color.LIGHT_GRAY;
 			myPanel.mineless--;
-			//System.out.println(myPanel.mineless); //Using to verify loops are adequate.
 			for(int i=-1; i<2; i++){
 				if(x+i<0){
 					i=0;
-					}
+				}
 				else if(x+i>8)
 					break;
 				for(int j =-1; j<2; j++){
 					if(y+j<0){
 						j=0;
-						}
+					}
 					else if(y+j>8){
 						break;
-						}
-					
+					}
+
 					mineChecker(x+i, y+j, mines, myPanel);
 				}
 			}
 			nearMines[x][y] = mineContact;
 			return mineContact;
 		}
-		else{
-			switch (mineContact) {
-			
-			case 1:
-				myPanel.colorArray[x][y]=Color.YELLOW;
-				
-				break;
-			case 2:
-				myPanel.colorArray[x][y]=Color.BLUE;
-				
-				break;
-			case 3:
-				myPanel.colorArray[x][y]=Color.CYAN;
-				
-				break;
-			case 4:
-				myPanel.colorArray[x][y]=Color.GREEN;
-				
-				break;
-			case 5:
-				myPanel.colorArray[x][y]=Color.ORANGE;
-				
-				break;
-			case 6:
-				myPanel.colorArray[x][y]=Color.MAGENTA;
-				
-				break;
-			case 7:
-				myPanel.colorArray[x][y]=Color.PINK;
-				
-				break;
-			case 8:
-				myPanel.colorArray[x][y]=new Color(10,100,220);
-				
-				break;
-			
-			}
-			
+		else{					
 			System.out.println("Main count is " + mineContact);
 			myPanel.repaint();
 			myPanel.mineless --;
 			//System.out.println(myPanel.mineless);
 			nearMines[x][y] = mineContact;
 			return mineContact;
-			}
 		}
+	}
 
 
 	public static void winChecker(MyPanel myPanel){
