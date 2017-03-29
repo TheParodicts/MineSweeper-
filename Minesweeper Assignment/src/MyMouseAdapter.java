@@ -1,18 +1,16 @@
- import java.awt.Color;
+import java.awt.Color;
 import java.awt.Component;
-import java.awt.Graphics;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Random;
-import javax.swing.JOptionPane;
+
 
 import javax.swing.JFrame;
 
 
 
 public class MyMouseAdapter extends MouseAdapter {
-public static int numMines=5;
+public static int numMines=10;
 	
 public static int getMines(){
 	return numMines;
@@ -105,7 +103,7 @@ public boolean[][] mines= MyPanel.setMines(numMines);
 									}
 								}
 								myPanel.repaint();
-								PUMessage.infoBox(myPanel, "You stepped on a mine", "Game Over");//Calls the Game OVer pop up msg.
+								PUMessage.infoBox(myPanel, "You stepped on a mine. You lost with: " + myPanel.points + " points.", "Game Over");//Calls the Game OVer pop up msg.
 							}
 							else{
 							
@@ -149,12 +147,12 @@ public boolean[][] mines= MyPanel.setMines(numMines);
 				if(myPanelRightClick.colorArray[gridXRightClick][gridYRightClick].equals(Color.WHITE)){
 					myPanelRightClick.colorArray[gridXRightClick][gridYRightClick] = Color.RED;
 					myPanelRightClick.repaint();
-					System.out.println("Turned Red");//yeah
+					System.out.println("Turned Red");//Draws the flag
 				}
 				else if(myPanelRightClick.colorArray[gridXRightClick][gridYRightClick].equals(Color.RED)){
 					myPanelRightClick.colorArray[gridXRightClick][gridYRightClick] = Color.WHITE;
 					myPanelRightClick.repaint();
-					System.out.println("Unflagged.");
+					System.out.println("Unflagged.");// Paints it white again if its already flagged.
 				}
 			}
 			break; 

@@ -19,11 +19,12 @@ public class MyPanel extends JPanel {
 	public int mouseDownGridY = 0;
 	public Color[][] colorArray = new Color[TOTAL_COLUMNS][TOTAL_ROWS];
 	public int[][] nearMines = new int[TOTAL_COLUMNS][TOTAL_ROWS];
+	public int points = 0;
 
 	public int mineless = 9 * 9 - (MyMouseAdapter.getMines());
-	
-	
- 	public MyPanel() {   //This is the constructor... this code runs first to initialize
+
+
+	public MyPanel() {   //This is the constructor... this code runs first to initialize
 
 		if (INNER_CELL_SIZE + (new Random()).nextInt(1) < 1) {	//Use of "random" to prevent unwanted Eclipse warning
 			throw new RuntimeException("INNER_CELL_SIZE must be positive!");
@@ -41,7 +42,7 @@ public class MyPanel extends JPanel {
 
 			}
 		}
- 	}
+	}
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
@@ -56,7 +57,6 @@ public class MyPanel extends JPanel {
 
 
 
-		//Draw the grid minus the bottom row (which has only one cell)
 		//By default, the grid will be 10x10 (see above: TOTAL_COLUMNS and TOTAL_ROWS) 
 		g.setColor(Color.BLACK);
 		for (int y = 0; y <= TOTAL_ROWS -1; y++) {
@@ -77,6 +77,8 @@ public class MyPanel extends JPanel {
 				Color c = colorArray[x][y];
 				g.setColor(c);
 				g.fillRect(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 1, y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 1, INNER_CELL_SIZE, INNER_CELL_SIZE);
+				
+				//Changes the color of the number based on its value.
 				if(nearMines[x][y]!=0){
 					switch(nearMines[x][y]){
 					case 0: break;
@@ -99,8 +101,8 @@ public class MyPanel extends JPanel {
 					}
 					
 				}
-				g.drawString(Integer.toString(nearMines[x][y]), (x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 12),  y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 20);
-			}
+				//Draws the numbers
+				g.drawString(Integer.toString(nearMines[x][y]), (x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 12),  y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 20);			}
 		}	
 	}
 	public int getGridX(int x, int y) {
@@ -128,7 +130,7 @@ public class MyPanel extends JPanel {
 		}
 		return x;
 	}
-	
+
 	public int getGridY(int x, int y) {
 		Insets myInsets = getInsets();
 		int x1 = myInsets.left;
@@ -155,6 +157,7 @@ public class MyPanel extends JPanel {
 		return y;
 	}
 
+	//Randomly creates the mines
 	public static boolean[][] setMines(int numMines){
 		boolean [][] mineArray = new boolean[9][9];
 		Random generator = new Random();
@@ -177,19 +180,18 @@ public class MyPanel extends JPanel {
 		}
 		return mineArray;
 	}
-	
-	
 
-
+	//Checks for mines around the square touched.
 	public int mineChecker(int x, int y, boolean mines[][], MyPanel myPanel){
 
 		int mineContact=0;
-		
+
 
 		if(mines[x][y]|| !myPanel.colorArray[x][y].equals(Color.WHITE)|| myPanel.colorArray[x][y].equals(Color.RED)){
 			//nearMines[x][y] = mineContact;
 			return mineContact;//prevents checking what's already checked.
 		}
+		myPanel.colorArray[x][y]=Color.LIGHT_GRAY;
 		for(int i= x-1; i<x+2; i++){
 			if(i<0){
 				i=0;}
@@ -204,51 +206,53 @@ public class MyPanel extends JPanel {
 					if (mines[i][j]==true){
 						mineContact++;
 					}
+					
 				}
 			}
 		}
-	
 		
+		//Recursion so that it keeps checking for mines all around
 		if (mineContact ==0){
-			myPanel.colorArray[x][y]=Color.LIGHT_GRAY;
 			myPanel.mineless--;
-			//System.out.println(myPanel.mineless); //Using to verify loops are adequate.
 			for(int i=-1; i<2; i++){
 				if(x+i<0){
 					i=0;
-					}
+				}
 				else if(x+i>8)
 					break;
 				for(int j =-1; j<2; j++){
 					if(y+j<0){
 						j=0;
-						}
+					}
 					else if(y+j>8){
 						break;
-						}
-					
+					}
+
 					mineChecker(x+i, y+j, mines, myPanel);
 				}
 			}
 			nearMines[x][y] = mineContact;
 			return mineContact;
 		}
+
 		else{
 			
 			myPanel.colorArray[x][y]=Color.LIGHT_GRAY;
 			System.out.println("Main count is " + mineContact);
 			myPanel.repaint();
 			myPanel.mineless --;
-			//System.out.println(myPanel.mineless);
 			nearMines[x][y] = mineContact;
+			points = points + nearMines[x][y];
 			return mineContact;
-			}
 		}
+	}
+	
+	
 
-
+	//Checks out when there are no more empty squares and you havent clicked on a mine.
 	public static void winChecker(MyPanel myPanel){
 		if (myPanel.mineless==0){
-			PUMessage.infoBox(myPanel, "You won!", "Congratulations!");//Calls the Wining pop up msg.
+			PUMessage.infoBox(myPanel, "You won! with " + myPanel.points + " points.", "Congratulations!");//Calls the Wining pop up msg.
 		}
 	}
 
