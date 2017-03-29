@@ -249,7 +249,7 @@ public class MyPanel extends JPanel {
 	
 	
 
-	//Checks out when there are no more empty squares and you havent clicked on a mine.
+	//Checks out when there are no more empty squares and you haven't clicked on a mine.
 	public static void winChecker(MyPanel myPanel){
 		if (myPanel.mineless==0){
 			PUMessage.infoBox(myPanel, "You won! with " + myPanel.points + " points.", "Congratulations!");//Calls the Wining pop up msg.
